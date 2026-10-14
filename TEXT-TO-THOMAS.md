@@ -1,6 +1,6 @@
 # Text for Thomas
 
-Copy this, paste it into Messages, then add the card's share link at the end.
+Copy this and paste it into Messages.
 
 ---
 
@@ -10,12 +10,11 @@ A dragon has been guarding your birthday card. Tap the link, then tap "Wake the 
 
 Skål, work dad 🍻
 
-[paste share link here]
+https://sunnymari.github.io/birthdaycards/
 
 ---
 
-## Getting the share link
+## The card
 
-1. Open the card: https://claude.ai/artifact/Tgf7ap4325abG3XQkd5ThP
-2. Use the page's **Share** menu and turn on link sharing so anyone with the link can view it.
-3. Copy that link and paste it into the text above.
+- Live card: https://sunnymari.github.io/birthdaycards/
+- Scan card-qr.png with a phone camera to open it.
