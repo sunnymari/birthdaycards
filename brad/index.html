@@ -3,34 +3,36 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>The Great Bradsby</title>
-<meta name="description" content="A thank-you card for Brad, bound like a 1925 novel. Open the book, old sport.">
-<meta property="og:title" content="The Great Bradsby 🥂">
-<meta property="og:description" content="A thank-you card for Brad, bound like a 1925 novel. Open the book, old sport.">
+<title>Brad's Charity Girl</title>
+<meta name="description" content="A thank-you card for Brad, bound like a Regency novel. Open the book.">
+<meta property="og:title" content="Brad's Charity Girl 📖">
+<meta property="og:description" content="A thank-you card for Brad, bound like a Regency novel. Open the book.">
+<meta property="og:image" content="https://sunnymari.github.io/birthdaycards/brad/brad-portrait.jpg">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#0d0d0f">
+<meta name="theme-color" content="#f6dfe0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Limelight&family=Poiret+One&family=Josefin+Sans:wght@400;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+SC:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap">
 <style>
-/* Layout: a clothbound 1925 novel. Closed, the cover sits centered; opened, the cover swings left to show the dedication beside the chapters. Single onyx-and-gold Art Deco look with one green light. */
+/* Layout: a Regency novel in rose satin. Closed, the cover sits centered with two gilt oval portraits; opened, it swings left to show the dedication beside the chapters. Single blush-and-gold look. */
 *, *::before, *::after { box-sizing: border-box; }
 :root {
-  --onyx: #0d0d0f;
-  --cloth: #16161b;
-  --paper: #efe6d2;
-  --paper-ink: #2a2620;
-  --gold: #d4af5f;
-  --gold-hot: #f1d48a;
-  --green: #4fe3a1;
-  --muted: #8b8577;
-  --display: "Limelight", "Didot", Georgia, serif;
-  --deco: "Poiret One", "Futura", "Century Gothic", sans-serif;
-  --label: "Josefin Sans", "Futura", "Century Gothic", sans-serif;
+  --blush: #f6dfe0;
+  --satin: #fbf3ea;
+  --rose: #e8a9b4;
+  --rose-deep: #b5546b;
+  --lavender: #a77fb8;
+  --gold: #c59a4e;
+  --gold-soft: #e3c58a;
+  --sage: #8aa58a;
+  --ink: #4a2f38;
+  --muted: #8a6f74;
+  --script: "Pinyon Script", "Snell Roundhand", "Apple Chancery", cursive;
+  --caps: "Cormorant SC", "Cormorant Garamond", Garamond, Georgia, serif;
   --body: "Cormorant Garamond", Garamond, Georgia, serif;
-  color-scheme: dark;
+  color-scheme: light;
 }
 html { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
-html, body { background: var(--onyx); color: var(--paper); }
+html, body { background: var(--blush); color: var(--ink); }
 body {
   margin: 0;
   font-family: var(--body);
@@ -38,11 +40,12 @@ body {
   padding-block: 40px 56px;
   min-height: 100vh;
   background:
-    repeating-linear-gradient(90deg, rgba(212,175,95,.035) 0 1px, transparent 1px 48px),
-    radial-gradient(ellipse 60% 45% at 50% 0%, rgba(212,175,95,.12), transparent 70%),
-    var(--onyx);
+    radial-gradient(circle at 25% 25%, rgba(197,154,78,.10) 0 2px, transparent 3px) 0 0 / 36px 36px,
+    radial-gradient(circle at 75% 75%, rgba(181,84,107,.08) 0 2px, transparent 3px) 0 0 / 36px 36px,
+    radial-gradient(ellipse 70% 50% at 50% 0%, #fff6f2, transparent 70%),
+    var(--blush);
 }
-#bubbles { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
+#petals { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
 
 .stage { position: relative; z-index: 1; max-width: 1060px; margin-inline: auto; overflow-x: clip; padding-block: 6px 24px; }
 .book {
@@ -62,118 +65,130 @@ body {
 .face { grid-area: 1 / 1; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
 .face.back { transform: rotateY(180deg); }
 
-.page { position: relative; min-width: 0; padding: 30px; display: flex; flex-direction: column; box-shadow: 0 30px 80px rgba(0,0,0,.65); }
-.page > .panel { flex: 1; position: relative; z-index: 1; padding: 34px 30px; display: flex; flex-direction: column; gap: 18px; }
-/* deco double rule frame with stepped corners */
-.page::before, .page::after { content: ""; position: absolute; pointer-events: none; }
-.page::before { inset: 12px; border: 1px solid var(--frame); }
-.page::after { inset: 18px; border: 1px solid var(--frame);
-  clip-path: polygon(0 14px, 14px 14px, 14px 0, calc(100% - 14px) 0, calc(100% - 14px) 14px, 100% 14px, 100% calc(100% - 14px), calc(100% - 14px) calc(100% - 14px), calc(100% - 14px) 100%, 14px 100%, 14px calc(100% - 14px), 0 calc(100% - 14px)); }
-.corner { position: absolute; width: 46px; height: 46px; z-index: 1; pointer-events: none; }
-.corner svg { width: 100%; height: 100%; display: block; }
-.corner.tl { top: 12px; left: 12px; } .corner.tr { top: 12px; right: 12px; transform: scaleX(-1); }
-.corner.bl { bottom: 12px; left: 12px; transform: scaleY(-1); } .corner.br { bottom: 12px; right: 12px; transform: scale(-1); }
+.page { position: relative; min-width: 0; padding: 30px; display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(120,50,70,.22), 0 2px 0 rgba(255,255,255,.6) inset; }
+.page > .panel { flex: 1; position: relative; z-index: 1; padding: 36px 30px; display: flex; flex-direction: column; gap: 18px; }
+/* double gilt rule */
+.page::before, .page::after { content: ""; position: absolute; pointer-events: none; border: 1px solid var(--gold); }
+.page::before { inset: 12px; }
+.page::after { inset: 17px; border-width: 2px; border-color: var(--gold-soft); border-radius: 2px; }
+.sprig { position: absolute; width: 64px; height: 64px; z-index: 2; pointer-events: none; }
+.sprig svg { width: 100%; height: 100%; display: block; }
+.sprig.tl { top: 4px; left: 4px; } .sprig.tr { top: 4px; right: 4px; transform: scaleX(-1); }
+.sprig.bl { bottom: 4px; left: 4px; transform: scaleY(-1); } .sprig.br { bottom: 4px; right: 4px; transform: scale(-1); }
 
-/* cloth cover */
-.cover-page { --frame: var(--gold); background: linear-gradient(160deg, #1b1b22, var(--cloth) 50%, #101014); }
-.cover { align-items: center; justify-content: center; text-align: center; }
-.eyebrow { font-family: var(--label); font-weight: 600; font-size: 12px; letter-spacing: .35em; text-transform: uppercase; color: var(--gold); margin: 0; }
-.fan { width: 100%; max-width: 380px; }
-.fan svg { width: 100%; height: auto; display: block; }
-.title {
-  font-family: var(--display); font-weight: 400; margin: 0;
-  font-size: clamp(38px, 6vw, 60px); line-height: .95; letter-spacing: .04em;
-  color: var(--gold-hot); text-wrap: balance;
-  text-shadow: 0 0 24px rgba(241,212,138,.25);
+/* satin cover */
+.cover-page { background:
+  linear-gradient(115deg, rgba(255,255,255,.55) 0%, transparent 22%, rgba(255,255,255,.35) 46%, transparent 62%, rgba(255,255,255,.4) 84%, transparent 100%),
+  linear-gradient(180deg, #f9e3e4, #efc6cc); }
+.cover { align-items: center; justify-content: center; text-align: center; gap: 14px; }
+.eyebrow { font-family: var(--caps); font-weight: 600; font-size: 14px; letter-spacing: .32em; color: var(--rose-deep); margin: 0; }
+.author { font-family: var(--caps); font-weight: 600; font-size: clamp(34px, 5vw, 52px); letter-spacing: .14em; line-height: 1; margin: 0; color: var(--rose-deep);
+  text-shadow: 0 1px 0 #fffaf3, 0 2px 10px rgba(197,154,78,.35); }
+
+.portraits { display: flex; align-items: flex-start; justify-content: center; gap: 28px; width: 100%; position: relative; }
+.portrait { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; width: 46%; max-width: 240px; }
+.oval {
+  width: 100%; aspect-ratio: 4 / 5; border-radius: 50%; padding: 7px;
+  background: conic-gradient(from 210deg, #f4dfa8, #b8873a, #f7e6b8, #a97a30, #f4dfa8, #c9a052, #f4dfa8);
+  box-shadow: 0 10px 24px rgba(120,50,70,.3);
 }
-.title small { display: block; font-family: var(--deco); font-size: .32em; letter-spacing: .5em; color: var(--gold); margin-bottom: 10px; }
-.subtitle { font-family: var(--deco); font-size: 22px; color: var(--paper); margin: 0; }
-.byline { font-family: var(--label); font-size: 12px; letter-spacing: .3em; text-transform: uppercase; color: var(--muted); margin: 0; }
-.rule { display: flex; align-items: center; gap: 12px; width: 100%; max-width: 320px; color: var(--gold); }
-.rule::before, .rule::after { content: ""; flex: 1; height: 1px; background: currentColor; }
-.rule span { width: 9px; height: 9px; transform: rotate(45deg); border: 1px solid currentColor; }
+.oval img { width: 100%; height: 100%; display: block; border-radius: 50%; object-fit: cover; border: 2px solid #7a5a22; }
+.portrait figcaption { font-family: var(--script); font-size: 26px; color: var(--rose-deep); line-height: 1.1; }
+
+.ribbon {
+  width: calc(100% + 60px); margin-inline: -30px; padding: 4px 16px 10px;
+  background: linear-gradient(180deg, rgba(167,127,184,.92), rgba(140,100,160,.92));
+  box-shadow: 0 4px 12px rgba(80,40,90,.25);
+}
+.title { font-family: var(--script); font-weight: 400; font-size: clamp(46px, 7vw, 68px); line-height: 1.15; color: #fffaf3; margin: 0; text-shadow: 0 2px 6px rgba(60,20,70,.35); }
+.subtitle { font-style: italic; font-size: 21px; margin: 0; color: var(--ink); text-wrap: balance; }
 
 /* paper pages */
-.paper { --frame: #b8975a; background: var(--paper); color: var(--paper-ink);
-  background-image: radial-gradient(ellipse at 50% 50%, transparent 60%, rgba(120,95,50,.12)); }
-.paper .eyebrow { color: #8a6a2c; }
-.dedication { align-items: center; justify-content: center; text-align: center; gap: 22px; }
-.dedication h2 { font-family: var(--deco); font-weight: 400; font-size: 34px; margin: 0; letter-spacing: .08em; }
-.dedication .to { font-style: italic; font-size: 24px; margin: 0; max-width: 16em; text-wrap: balance; }
-.contents { width: 100%; max-width: 330px; display: grid; gap: 8px; text-align: left; margin: 0; padding: 0; list-style: none; }
+.paper { background: var(--satin);
+  background-image: radial-gradient(ellipse at 50% 50%, transparent 62%, rgba(181,84,107,.08)); }
+.dedication { align-items: center; justify-content: center; text-align: center; gap: 20px; }
+.dedication h2 { font-family: var(--script); font-weight: 400; font-size: 54px; margin: 0; color: var(--rose-deep); line-height: 1; }
+.dedication .to { font-style: italic; font-size: 23px; margin: 0; max-width: 16em; text-wrap: balance; }
+.flourish { width: min(220px, 70%); color: var(--gold); }
+.flourish svg { width: 100%; height: auto; display: block; }
+.contents { width: 100%; max-width: 340px; display: grid; gap: 8px; text-align: left; margin: 0; padding: 0; list-style: none; }
 .contents li { display: flex; gap: 8px; align-items: baseline; font-size: 18px; }
-.contents li::after { content: ""; order: 1; flex: 1; border-bottom: 1px dotted #a08a60; translate: 0 -4px; }
-.contents b { font-family: var(--label); font-weight: 600; font-size: 12px; letter-spacing: .15em; color: #8a6a2c; min-width: 2.2em; }
-.contents .pg { order: 2; font-variant-numeric: tabular-nums; font-family: var(--label); font-size: 13px; }
-.epigraph { font-style: italic; font-size: 18px; color: #5d5446; margin: 0; max-width: 20em; }
+.contents li::after { content: ""; order: 1; flex: 1; border-bottom: 1px dotted var(--rose); translate: 0 -4px; }
+.contents b { font-family: var(--caps); font-weight: 600; font-size: 14px; color: var(--rose-deep); min-width: 2em; }
+.contents .pg { order: 2; font-variant-numeric: tabular-nums; font-family: var(--caps); font-size: 15px; }
+.epigraph { font-style: italic; font-size: 18px; color: var(--muted); margin: 0; max-width: 20em; }
 
 .chapters { gap: 14px; }
-.chapter h3 { font-family: var(--deco); font-weight: 400; font-size: 25px; margin: 0 0 6px; line-height: 1.15; text-wrap: balance; }
-.chapter h3 b { display: block; font-family: var(--label); font-weight: 600; font-size: 11.5px; letter-spacing: .3em; color: #8a6a2c; margin-bottom: 4px; }
-.chapter p { font-size: 19px; line-height: 1.5; margin: 0; }
+.chapter h3 { font-family: var(--caps); font-weight: 600; font-size: 22px; margin: 0 0 6px; line-height: 1.2; text-wrap: balance; letter-spacing: .03em; }
+.chapter h3 b { display: block; font-family: var(--script); font-weight: 400; font-size: 30px; color: var(--rose-deep); letter-spacing: 0; line-height: 1; margin-bottom: 2px; }
+.chapter p { font-size: 19.5px; line-height: 1.5; margin: 0; }
 .chapter p + p { margin-top: 8px; }
 .chapter cite { font-style: italic; }
-.dropcap::first-letter { font-family: var(--display); float: left; font-size: 3.1em; line-height: .8; padding: 6px 8px 0 0; color: #8a6a2c; }
-.sep { text-align: center; color: #a08a60; letter-spacing: .6em; font-size: 13px; margin: 0; }
-.sign { font-family: var(--deco); font-size: 24px; margin: 0; }
-.sign small { display: block; font-family: var(--body); font-style: italic; font-size: 17px; color: #5d5446; }
+.dropcap::first-letter { font-family: var(--script); float: left; font-size: 3.6em; line-height: .75; padding: 8px 8px 0 0; color: var(--rose-deep); }
+.sep { display: flex; justify-content: center; margin: 0; }
+.sep svg { width: 120px; height: 20px; }
+.sign { font-family: var(--script); font-size: 38px; margin: 0; color: var(--rose-deep); line-height: 1.1; }
+.sign small { display: block; font-family: var(--body); font-style: italic; font-size: 18px; color: var(--muted); }
 
+.ps { margin: 0; font-size: 18px; line-height: 1.45; padding: 12px 16px; border: 1px dashed var(--rose); border-radius: 10px; background: rgba(246,223,224,.5); }
+.ps b { font-family: var(--script); font-weight: 400; font-size: 28px; color: var(--rose-deep); margin-right: 4px; }
+.ps i { color: var(--muted); }
 .btnrow { display: flex; flex-wrap: wrap; gap: 12px; }
 .btn {
-  font-family: var(--label); font-weight: 600; font-size: 12px; letter-spacing: .25em; text-transform: uppercase;
-  padding: 13px 20px; cursor: pointer; border: 1px solid; background: transparent;
-  transition: background .2s, color .2s;
+  font-family: var(--caps); font-weight: 600; font-size: 15px; letter-spacing: .14em;
+  padding: 11px 22px; cursor: pointer; border-radius: 999px; border: 1px solid var(--rose-deep);
+  transition: background .2s, color .2s, transform .2s;
 }
-.btn.gold { color: var(--onyx); background: var(--gold); border-color: var(--gold); }
-.btn.gold:hover { background: var(--gold-hot); }
-.btn.ink { color: var(--paper-ink); border-color: #8a6a2c; }
-.btn.ink:hover { background: var(--paper-ink); color: var(--paper); }
-.btn:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
-
-.greenlight { animation: blink 3.2s ease-in-out infinite; }
-@keyframes blink { 50% { opacity: .45; } }
+.btn.rose { color: #fffaf3; background: var(--rose-deep); }
+.btn.rose:hover { background: #9c4159; transform: translateY(-1px); }
+.btn.line { color: var(--rose-deep); background: transparent; }
+.btn.line:hover { background: var(--blush); }
+.btn:focus-visible { outline: 2px solid var(--lavender); outline-offset: 3px; }
 
 @media (max-width: 760px) {
   .book, .book.open { grid-template-columns: 1fr; transform: none; }
   .inside-page, .leaf { grid-column: 1; }
   .page { padding: 22px; }
-  .page > .panel { padding: 30px 16px; }
+  .page > .panel { padding: 34px 14px; }
+  .ribbon { width: calc(100% + 28px); margin-inline: -14px; }
   .leaf { transition: transform 1.1s cubic-bezier(.6,.05,.3,1), visibility 0s linear 0s; }
   .book.open .leaf { visibility: hidden; transition: transform 1.1s cubic-bezier(.6,.05,.3,1), visibility 0s linear 1.1s; }
   .chapter p { font-size: 18px; }
+    .portrait figcaption { font-size: 21px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .greenlight { animation: none; }
   .book, .leaf { transition: none !important; }
 }
 </style>
 </head>
 <body>
-<canvas id="bubbles" aria-hidden="true"></canvas>
+<canvas id="petals" aria-hidden="true"></canvas>
 
 <main class="stage">
 <div class="book" id="book">
   <section class="page paper inside-page" id="insidePage">
     <div class="panel chapters">
       <div class="chapter">
-        <h3><b>Chapter I</b>In Which a Ward Is Taken</h3>
+        <h3><b>Chapter the First</b>In Which a Ward Is Taken</h3>
         <p class="dropcap">All across medieval Europe, a young person without the right backing could be taken in as a ward. A lord brought them into his household, gave them a seat at his table, and taught them what they would need: how to carry themselves, how to work, how to stand up for what's right. In return the ward gave loyalty for life.</p>
       </div>
-      <p class="sep" aria-hidden="true">◆ ◆ ◆</p>
+      <p class="sep" aria-hidden="true"><svg class="vine" viewBox="0 0 120 20"></svg></p>
       <div class="chapter">
-        <h3><b>Chapter II</b>In Which Gatsby Finds His Patron</h3>
-        <p>Fitzgerald knew the custom. In <cite>The Great Gatsby</cite>, seventeen-year-old James Gatz rows out to a millionaire's yacht on Lake Superior, and Dan Cody takes him aboard. Cody gives him work, a blue coat, and a look at the wider world. Every legend starts with someone who said, come aboard.</p>
+        <h3><b>Chapter the Second</b>In Which a Charity Girl Is Rescued</h3>
+        <p>Georgette Heyer knew the custom too. In <cite>Charity Girl</cite>, Viscount Desford meets Cherry Steane, a girl kept as a poor relation and treated as one. When he finds her running away to London with almost nothing, he takes her under his protection and refuses to rest until she has a proper home.</p>
       </div>
-      <p class="sep" aria-hidden="true">◆ ◆ ◆</p>
+      <p class="sep" aria-hidden="true"><svg class="vine" viewBox="0 0 120 20"></svg></p>
       <div class="chapter">
-        <h3><b>Chapter III</b>In Which I Say Thank You</h3>
-        <p>Brad, you did that for me. You took me in when you didn't have to, showed me the ropes, and made me feel like I belonged at the table. I'm your ward for life, and grateful for it every day.</p>
-        <p>Thank you, old sport.</p>
+        <h3><b>Chapter the Third</b>In Which I Say Thank You</h3>
+        <p>Brad, you are my Desford. You took me in when you didn't have to, showed me the ropes, and made me feel like I belonged at the table. I'm your ward for life, and grateful for it every day.</p>
+        <p>Thank you for everything, Brad.</p>
       </div>
-      <p class="sign"><small>Yours, with the loyalty of a sworn ward,</small>Your Ward</p>
+      <p class="sign"><small>With gratitude and loyalty,</small>Your Ward</p>
+      <p class="ps"><b>P.S.</b> In every good Regency novel, a proper guardian also arranges introductions. So if you happen to know a homie worth meeting, please drop me off with him. <i>*cough cough*</i></p>
       <div class="btnrow">
-        <button class="btn gold" id="toastBtn" type="button">Pop the champagne</button>
-        <button class="btn ink" id="closeBtn" type="button">Close the book</button>
+        <button class="btn rose" id="petalBtn" type="button">Throw the flowers</button>
+        <button class="btn line" id="closeBtn" type="button">Close the book</button>
       </div>
     </div>
   </section>
@@ -181,41 +196,21 @@ body {
   <div class="leaf" id="leaf">
     <section class="page cover-page face front">
       <div class="panel cover">
-        <p class="eyebrow">A Novel · MCMXXV</p>
-        <div class="fan">
-          <svg viewBox="0 0 320 180" role="img" aria-label="An Art Deco sunburst rising over the water, with a green light across the bay">
-            <defs>
-              <linearGradient id="ray" x1="0" y1="1" x2="0" y2="0">
-                <stop offset="0" stop-color="#f1d48a"/>
-                <stop offset="1" stop-color="#d4af5f" stop-opacity=".35"/>
-              </linearGradient>
-              <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-                <stop offset="0" stop-color="#4fe3a1" stop-opacity=".9"/>
-                <stop offset="1" stop-color="#4fe3a1" stop-opacity="0"/>
-              </radialGradient>
-            </defs>
-            <g id="rays"></g>
-            <g fill="none" stroke="#d4af5f" stroke-width="1.2">
-              <path d="M110 140 A50 50 0 0 1 210 140"/>
-              <path d="M90 140 A70 70 0 0 1 230 140" stroke-dasharray="2 4"/>
-            </g>
-            <path d="M126 140 A34 34 0 0 1 194 140 Z" fill="#d4af5f"/>
-            <path d="M136 140 A24 24 0 0 1 184 140 Z" fill="#16161b"/>
-            <path d="M144 140 A16 16 0 0 1 176 140 Z" fill="#f1d48a"/>
-            <line x1="10" y1="140" x2="310" y2="140" stroke="#d4af5f" stroke-width="1.5"/>
-            <g id="water" stroke="#d4af5f" stroke-linecap="round"></g>
-            <g class="greenlight">
-              <circle cx="262" cy="136" r="12" fill="url(#glow)"/>
-              <circle cx="262" cy="136" r="2.6" fill="#4fe3a1"/>
-              <line x1="262" y1="139" x2="262" y2="146" stroke="#4fe3a1" stroke-width="1"/>
-            </g>
-          </svg>
+        <p class="eyebrow">A Regency Tale of Wardship</p>
+        <p class="author">Brad's</p>
+        <div class="portraits">
+          <figure class="portrait">
+            <div class="oval"><img src="brad-portrait.jpg" alt="Brad as a Victorian gentleman in a frock coat and bow tie, sepia" width="520" height="527"></div>
+            <figcaption>The Guardian</figcaption>
+          </figure>
+          <figure class="portrait">
+            <div class="oval"><img src="me-portrait.jpg" alt="His ward in a pink gown and jewelled headband before gold satin drapery" width="440" height="517"></div>
+            <figcaption>The Ward</figcaption>
+          </figure>
         </div>
-        <h1 class="title"><small>The Great</small>Bradsby</h1>
-        <div class="rule" aria-hidden="true"><span></span></div>
-        <p class="subtitle">or, How I Became a Ward</p>
-        <p class="byline">By his grateful ward</p>
-        <button class="btn gold" id="openBtn" type="button">Open the book</button>
+        <div class="ribbon"><h1 class="title">Charity Girl</h1></div>
+        <p class="subtitle">or, How a Good Friend Took In a Ward</p>
+        <button class="btn rose" id="openBtn" type="button">Open the book</button>
       </div>
     </section>
 
@@ -224,13 +219,13 @@ body {
         <p class="eyebrow">Dedication</p>
         <h2>For Brad</h2>
         <p class="to">who took me in, gave me a place at the table, and never once made me feel like a guest.</p>
-        <div class="rule" aria-hidden="true" style="color:#a08a60"><span></span></div>
+        <div class="flourish"><svg class="vine" viewBox="0 0 120 20"></svg></div>
         <ul class="contents">
           <li><b>I</b>In Which a Ward Is Taken<span class="pg">1</span></li>
-          <li><b>II</b>In Which Gatsby Finds His Patron<span class="pg">7</span></li>
-          <li><b>III</b>In Which I Say Thank You<span class="pg">25</span></li>
+          <li><b>II</b>In Which a Charity Girl Is Rescued<span class="pg">9</span></li>
+          <li><b>III</b>In Which I Say Thank You<span class="pg">27</span></li>
         </ul>
-        <p class="epigraph">Some people throw the party. A rare few open the door and tell you to stay.</p>
+        <p class="epigraph">Every good story needs one person who opens the door and says, you belong here.</p>
       </div>
     </section>
   </div>
@@ -246,89 +241,88 @@ body {
     parent.appendChild(n); return n;
   };
 
-  // Sunburst: tapered rays fanning up from the horizon
-  const rays = document.getElementById("rays");
-  for (let i = 0; i <= 24; i++) {
-    const a = Math.PI + (i / 24) * Math.PI;
-    const long = i % 2 === 0, R = long ? 132 : 104, w = long ? .05 : .035;
-    const p = (ang, r) => `${(160 + r * Math.cos(ang)).toFixed(2)} ${(140 + r * Math.sin(ang)).toFixed(2)}`;
-    el("path", { d: `M${p(a - w, 40)} L${p(a, R)} L${p(a + w, 40)} Z`, fill: "url(#ray)" }, rays);
-  }
-  // Water: lines that shorten toward the viewer
-  const water = document.getElementById("water");
-  [[148, 120, 1.1], [156, 96, 1], [165, 70, .9], [175, 44, .8]].forEach(([y, half, w], i) => {
-    el("line", { x1: 160 - half, y1: y, x2: 160 + half, y2: y, "stroke-width": w, "stroke-dasharray": i % 2 ? "14 6" : "22 8" }, water);
-  });
-  el("line", { x1: 254, y1: 150, x2: 270, y2: 150, stroke: "#4fe3a1", "stroke-width": 1, opacity: .7 }, water);
-  el("line", { x1: 258, y1: 158, x2: 266, y2: 158, stroke: "#4fe3a1", "stroke-width": 1, opacity: .45 }, water);
-
-  // Deco corner fans on every page
-  const corner = color => {
-    let s = `<svg viewBox="0 0 46 46" aria-hidden="true"><g fill="none" stroke="${color}" stroke-width="1">`;
-    for (let i = 0; i <= 6; i++) {
-      const a = (i / 6) * Math.PI / 2;
-      s += `<line x1="4" y1="4" x2="${(4 + 30 * Math.cos(a)).toFixed(1)}" y2="${(4 + 30 * Math.sin(a)).toFixed(1)}"/>`;
+  // A cabbage rose: spiralling petals around a tight bud
+  const rose = (g, cx, cy, R, petal, deep) => {
+    for (let i = 13; i >= 0; i--) {
+      const a = i * 2.4, r = R * (.12 + i * .065);
+      const x = cx + r * Math.cos(a), y = cy + r * Math.sin(a);
+      el("ellipse", { cx: x, cy: y, rx: R * .38, ry: R * .27, transform: `rotate(${(a * 57.3 + 90).toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)})`,
+        fill: i % 2 ? petal : "#f3c2ca", stroke: deep, "stroke-width": R * .03, opacity: .97 }, g);
     }
-    s += `<path d="M4 22 A18 18 0 0 0 22 4"/><path d="M4 36 A32 32 0 0 0 36 4"/></g></svg>`;
+    el("circle", { cx, cy, r: R * .14, fill: deep }, g);
+  };
+  const leaf = (g, x, y, rot, s) => el("path", { d: `M0 0 Q${6 * s} ${-6 * s} ${16 * s} 0 Q${6 * s} ${6 * s} 0 0 Z`, transform: `translate(${x} ${y}) rotate(${rot})`, fill: "#8aa58a", stroke: "#6d8a6d", "stroke-width": .6 }, g);
+
+
+  // Gold vine dividers with a rosebud
+  document.querySelectorAll("svg.vine").forEach(s => {
+    el("path", { d: "M4 10 C24 0 36 20 56 10 M116 10 C96 0 84 20 64 10", fill: "none", stroke: "#c59a4e", "stroke-width": 1.2 }, s);
+    leaf(s, 26, 8, -30, .7); leaf(s, 94, 8, 210, .7); leaf(s, 40, 12, 20, .55); leaf(s, 80, 12, 160, .55);
+    rose(s, 60, 10, 7, "#e8a9b4", "#b5546b");
+  });
+
+  // Corner sprigs: a rose and leaves on a gold stem
+  const sprig = () => {
+    const s = document.createElementNS(NS, "svg"); s.setAttribute("viewBox", "0 0 64 64"); s.setAttribute("aria-hidden", "true");
+    el("path", { d: "M14 14 Q30 18 52 12 M14 14 Q18 30 12 52", fill: "none", stroke: "#c59a4e", "stroke-width": 1.2 }, s);
+    leaf(s, 30, 15, -10, 1); leaf(s, 15, 30, 100, 1); leaf(s, 42, 13, 15, .8); leaf(s, 13, 42, 80, .8);
+    rose(s, 14, 14, 11, "#e8a9b4", "#b5546b");
     return s;
   };
-  document.querySelectorAll(".page").forEach(pg => {
-    const c = pg.classList.contains("paper") ? "#b8975a" : "#d4af5f";
-    pg.insertAdjacentHTML("afterbegin", ["tl", "tr", "bl", "br"].map(k => `<div class="corner ${k}">${corner(c)}</div>`).join(""));
-  });
+  document.querySelectorAll(".page").forEach(pg => ["tl", "tr", "bl", "br"].forEach(k => {
+    const d = document.createElement("div"); d.className = "sprig " + k; d.appendChild(sprig()); pg.prepend(d);
+  }));
 
-  // Champagne: rising bubbles plus a burst of gold confetti
-  const cv = document.getElementById("bubbles"), ctx = cv.getContext("2d");
+  // Rose petals: a few drift all the time, a shower on request
+  const cv = document.getElementById("petals"), ctx = cv.getContext("2d");
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let W, H, bits = [], running = false;
-  const size = () => { W = cv.width = innerWidth * devicePixelRatio; H = cv.height = innerHeight * devicePixelRatio; };
-  size(); addEventListener("resize", size);
   const D = devicePixelRatio;
-  const pop = () => {
-    for (let i = 0; i < 160; i++) bits.push({ kind: "bubble", x: Math.random() * W, y: H + Math.random() * H * .3, r: (1.5 + Math.random() * 4) * D, vy: -(1.5 + Math.random() * 3) * D, wob: Math.random() * 6, life: 1 });
-    for (let i = 0; i < 140; i++) {
-      const a = -Math.PI / 2 + (Math.random() - .5) * 1.6, sp = (6 + Math.random() * 9) * D;
-      bits.push({ kind: "confetti", x: W / 2, y: H * .55, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, rot: Math.random() * 6, vr: (Math.random() - .5) * .4, w: (4 + Math.random() * 5) * D, h: (2 + Math.random() * 3) * D, c: ["#d4af5f", "#f1d48a", "#efe6d2", "#4fe3a1"][i % 4], life: 1 });
-    }
-    if (!running) { running = true; requestAnimationFrame(tick); }
-  };
+  let W, H, petals = [];
+  const size = () => { W = cv.width = innerWidth * D; H = cv.height = innerHeight * D; };
+  size(); addEventListener("resize", size);
+  const colors = ["#e8a9b4", "#f3c2ca", "#d98a9c", "#fbe1e5", "#c96a82"];
+  const add = (burst) => petals.push({
+    x: Math.random() * W, y: burst ? -Math.random() * H * .8 : -20 * D,
+    vy: (burst ? 1.4 + Math.random() * 2 : .6 + Math.random() * .8) * D, sway: Math.random() * 6, sw: .01 + Math.random() * .02,
+    rot: Math.random() * 6, vr: (Math.random() - .5) * .05, s: (5 + Math.random() * 6) * D, c: colors[(Math.random() * colors.length) | 0], flip: Math.random() * 6
+  });
   const tick = () => {
     ctx.clearRect(0, 0, W, H);
-    bits = bits.filter(b => b.life > 0 && b.y > -40 && b.y < H + H * .4);
-    for (const b of bits) {
-      if (b.kind === "bubble") {
-        b.y += b.vy; b.wob += .08; b.x += Math.sin(b.wob) * .6 * D; b.life -= .004;
-        ctx.globalAlpha = .7 * b.life; ctx.strokeStyle = "#f1d48a"; ctx.lineWidth = D;
-        ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2); ctx.stroke();
-      } else {
-        b.vy += .22 * D; b.vx *= .985; b.x += b.vx; b.y += b.vy; b.rot += b.vr; b.life -= .006;
-        ctx.globalAlpha = Math.min(1, b.life * 1.5); ctx.fillStyle = b.c;
-        ctx.save(); ctx.translate(b.x, b.y); ctx.rotate(b.rot); ctx.fillRect(-b.w / 2, -b.h / 2, b.w, b.h * Math.abs(Math.cos(b.rot * 2))); ctx.restore();
-      }
+    petals = petals.filter(p => p.y < H + 30 * D);
+    for (const p of petals) {
+      p.sway += p.sw; p.flip += .05; p.rot += p.vr;
+      p.x += Math.sin(p.sway) * 1.1 * D; p.y += p.vy;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.scale(1, Math.abs(Math.cos(p.flip)) * .7 + .3);
+      ctx.fillStyle = p.c; ctx.globalAlpha = .9;
+      ctx.beginPath(); ctx.moveTo(0, -p.s);
+      ctx.bezierCurveTo(p.s * .9, -p.s * .6, p.s * .8, p.s * .7, 0, p.s);
+      ctx.bezierCurveTo(-p.s * .8, p.s * .7, -p.s * .9, -p.s * .6, 0, -p.s);
+      ctx.fill(); ctx.restore();
     }
-    ctx.globalAlpha = 1;
-    if (bits.length) requestAnimationFrame(tick); else running = false;
+    if (petals.length) requestAnimationFrame(tick); else running = false;
   };
+  let running = false;
+  const shower = n => { for (let i = 0; i < n; i++) add(true); if (!running) { running = true; requestAnimationFrame(tick); } };
 
   const book = document.getElementById("book");
   const insidePage = document.getElementById("insidePage"), frontFace = document.querySelector(".face.front");
   const openBtn = document.getElementById("openBtn"), closeBtn = document.getElementById("closeBtn");
-  const toastBtn = document.getElementById("toastBtn");
+  const petalBtn = document.getElementById("petalBtn");
   insidePage.inert = true;
   openBtn.addEventListener("click", () => {
     book.classList.add("open");
     insidePage.inert = false; frontFace.inert = true;
-    setTimeout(() => toastBtn.focus({ preventScroll: true }), reduce ? 0 : 1100);
+    setTimeout(() => petalBtn.focus({ preventScroll: true }), reduce ? 0 : 1100);
   });
   closeBtn.addEventListener("click", () => {
     book.classList.remove("open");
     insidePage.inert = true; frontFace.inert = false;
-    toastBtn.textContent = "Pop the champagne";
+    petalBtn.textContent = "Throw the flowers";
     openBtn.focus({ preventScroll: true });
   });
-  toastBtn.addEventListener("click", () => {
-    if (!reduce) pop();
-    toastBtn.textContent = "Cheers, old sport";
+  petalBtn.addEventListener("click", () => {
+    if (!reduce) shower(160);
+    petalBtn.textContent = "Thank you, Brad";
   });
 })();
 </script>
