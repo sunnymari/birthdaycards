@@ -1,0 +1,12 @@
+.shooting-star-layer{position:fixed;inset:0;z-index:12;pointer-events:none;overflow:hidden}
+.sparkly-shooting-star{position:absolute;top:0;left:0;width:245px;height:112px;will-change:transform;animation:shoot-across-card 2.8s cubic-bezier(.25,.45,.6,1) both}
+.shooting-star-head{position:absolute;right:0;top:20px;width:76px;height:76px;filter:drop-shadow(0 0 11px #ffe49c99)}
+.shooting-star-tail{position:absolute;right:48px;top:46px;width:195px;height:27px;border-radius:50%;background:linear-gradient(90deg,transparent,#eed0ec66 20%,#f4b4cdcc 55%,#ffe6a4 90%);filter:blur(1px);transform-origin:right center}
+.shooting-star-tail:before,.shooting-star-tail:after{content:'';position:absolute;right:0;width:92%;height:7px;border-radius:50%;background:linear-gradient(90deg,transparent,#fff9dc);top:4px;transform:rotate(-4deg);transform-origin:right center}
+.shooting-star-tail:after{top:17px;background:linear-gradient(90deg,transparent,#cbb9e7bb,#f5c3dc);transform:rotate(4deg)}
+.shooting-star-spark{position:absolute;left:var(--sx);top:var(--sy);color:var(--spark-color);font:var(--spark-size)/1 Georgia,serif;text-shadow:0 0 6px #fff9dc;-webkit-text-stroke:.6px #b38a65;animation:shooting-star-twinkle .65s var(--spark-delay) ease-in-out infinite alternate}
+.animations-paused .sparkly-shooting-star,.animations-paused .shooting-star-spark{animation-play-state:paused}
+@keyframes shoot-across-card{0%{opacity:0;transform:translate3d(-260px,8vh,0) rotate(9deg)}9%{opacity:1}48%{transform:translate3d(calc(50vw - 125px),22vh,0) rotate(13deg)}88%{opacity:1}100%{opacity:0;transform:translate3d(calc(100vw + 80px),39vh,0) rotate(18deg)}}
+@keyframes shooting-star-twinkle{from{opacity:.25;transform:scale(.45) rotate(-18deg)}to{opacity:1;transform:scale(1.15) rotate(18deg)}}
+@media(max-width:700px){.sparkly-shooting-star{width:190px;height:90px;animation-duration:2.4s}.shooting-star-head{width:60px;height:60px;top:18px}.shooting-star-tail{right:36px;top:38px;width:153px;height:22px}.shooting-star-tail:after{top:13px}}
+@media(prefers-reduced-motion:reduce){.shooting-star-layer{display:none}}

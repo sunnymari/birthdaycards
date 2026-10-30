@@ -14,3 +14,5 @@ The robot loads only after opening. Pause/play, fold/reopen, reduced-motion pref
 The celebration includes bouncing pink handwritten thank-you letters, floating heart stickers, mixed heart/star confetti, and an Encore button. Starbot cycles through a hop, side step, swivel, and bow. The animation pause control covers the robot and the surrounding looping effects; reduced motion keeps a full-size static pose.
 
 The card uses Patrick Hand lettering, pink ink, cocoa outlines, scalloped cloud-paper edges, and a heart-patterned bow inspired by the supplied stationery reference. The original 3D Starbot and all dance controls are retained.
+
+Opening the card or tapping Encore launches a smiling gold shooting star with a pink-and-gold trail and twinkling sparkles. The effect cleans itself up, pauses with the other animations, and is hidden for reduced-motion preferences.
