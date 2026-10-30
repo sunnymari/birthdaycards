@@ -11,4 +11,6 @@ The original Starbot GLB is reused from Marissa's actuator diagnostics project. 
 
 The robot loads only after opening. Pause/play, fold/reopen, reduced-motion preferences, background-tab suspension, and an animated SVG fallback are supported. No audio, analytics, form submission, or external messages are sent by the card.
 
-The celebration includes pastel bouncing thank-you letters, floating heart stickers, mixed heart/star confetti, and an Encore button. Starbot cycles through a hop, two-step, wave, and bow. The animation pause control covers the robot and the surrounding looping effects; reduced motion keeps a full-size static pose.
+The celebration includes bouncing pink handwritten thank-you letters, floating heart stickers, mixed heart/star confetti, and an Encore button. Starbot cycles through a hop, two-step, wave, and bow. The animation pause control covers the robot and the surrounding looping effects; reduced motion keeps a full-size static pose.
+
+The card uses Patrick Hand lettering, pink ink, cocoa outlines, scalloped cloud-paper edges, and a heart-patterned bow inspired by the supplied stationery reference. The original 3D Starbot and all dance controls are retained.
