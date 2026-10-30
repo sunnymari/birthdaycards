@@ -98,7 +98,7 @@ export async function mountStarbot(host, fallback) {
     renderer.setSize(width, height, false);
     const aspect = width / height;
     // Fit the complete dance envelope, including hands and antenna, at every size.
-    const viewHeight = Math.max(2.45, 2.35 / aspect);
+    const viewHeight = Math.max(2.65, 2.55 / aspect);
     camera.left = -viewHeight * aspect / 2; camera.right = viewHeight * aspect / 2;
     camera.top = viewHeight / 2; camera.bottom = -viewHeight / 2;
     camera.lookAt(target); camera.updateProjectionMatrix();
@@ -106,19 +106,26 @@ export async function mountStarbot(host, fallback) {
   }
   const observer = new ResizeObserver(resize); observer.observe(host);
   function pose(t) {
-    const beat = t * 3.2;
-    pivot.position.set(Math.sin(beat / 2) * .07, .045 + (1 - Math.cos(beat * 2)) * .035, 0);
-    pivot.rotation.set(0, Math.sin(beat / 2) * .16, Math.sin(beat) * .055);
-    shadow.scale.setScalar(1 - pivot.position.y * .7);
+    const beat = t * 4.4;
+    const cycle = t % 7.2;
+    const wave = THREE.MathUtils.smoothstep(cycle, 2.0, 2.7) * (1 - THREE.MathUtils.smoothstep(cycle, 4.7, 5.4));
+    const bow = THREE.MathUtils.smoothstep(cycle, 5.5, 5.95) * (1 - THREE.MathUtils.smoothstep(cycle, 6.3, 6.9));
+    const entrance = Math.min(t / .75, 1);
+    const pop = 1 + Math.pow(1 - entrance, 3) * (1.7 * entrance - .5);
+    pivot.scale.setScalar(pop);
+    pivot.position.set(Math.sin(beat / 2) * .10, .055 + (1 - Math.cos(beat * 2)) * .060, 0);
+    pivot.rotation.set(bow * .12, Math.sin(beat / 2) * .22, Math.sin(beat) * .085);
+    shadow.scale.setScalar(1 - pivot.position.y * .9);
     if (!rig) return;
-    rig.head.rotation.set(0, Math.sin(beat / 2) * -.07, Math.sin(beat) * -.025);
+    rig.head.rotation.set(bow * .13, Math.sin(beat / 2) * -.09, Math.sin(beat) * -.045);
     for (const {side, shoulder, elbow, hip, knee} of rig.limbs) {
       const phase = beat + (side < 0 ? Math.PI : 0);
-      shoulder.bone.rotation.z = side * (-.22 + Math.sin(phase) * .20);
-      shoulder.bone.rotation.y = Math.cos(phase) * .06;
-      elbow.bone.rotation.z = side * (-.10 + Math.cos(phase) * .10);
-      hip.bone.rotation.x = Math.sin(phase) * .08;
-      knee.bone.rotation.x = Math.max(0, Math.sin(phase)) * .13;
+      const waving = side < 0 ? wave : 0;
+      shoulder.bone.rotation.z = THREE.MathUtils.lerp(side * (-.22 + Math.sin(phase) * .26), side * (.45 + Math.sin(beat * 1.4) * .16), waving);
+      shoulder.bone.rotation.y = Math.cos(phase) * .09;
+      elbow.bone.rotation.z = THREE.MathUtils.lerp(side * (-.10 + Math.cos(phase) * .13), side * (.24 + Math.cos(beat * 1.4) * .12), waving);
+      hip.bone.rotation.x = Math.sin(phase) * .11;
+      knee.bone.rotation.x = Math.max(0, Math.sin(phase)) * .17;
     }
   }
   function tick(now) {
@@ -150,7 +157,7 @@ export async function mountStarbot(host, fallback) {
     const center = box.getCenter(new THREE.Vector3());
     model.position.add(new THREE.Vector3(-center.x, -box.min.y, -center.z));
     pivot.add(model); loaded = true;
-    pose(0); resize(); fallback.hidden = true; setPlaying(playing);
+    pose(playing ? 0 : .75); resize(); fallback.hidden = true; setPlaying(playing);
   } catch (error) {
     failed = true; observer.disconnect(); renderer.dispose(); renderer.domElement.remove();
     throw error;
@@ -158,5 +165,9 @@ export async function mountStarbot(host, fallback) {
   renderer.domElement.addEventListener('webglcontextlost', () => {
     failed = true; setPlaying(false); fallback.hidden = false; renderer.domElement.hidden = true;
   });
-  return { setPlaying };
+  function replayDance() {
+    elapsed = 0; lastTime = 0;
+    if (loaded) { pose(playing ? 0 : .75); renderer.render(scene, camera); }
+  }
+  return { setPlaying, replayDance };
 }

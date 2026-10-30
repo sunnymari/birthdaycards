@@ -7,10 +7,11 @@ let loadingDancer = null;
 let confettiTimer;
 
 function updateDance() {
-  $('inside').classList.toggle('paused', paused);
+  $('inside').classList.toggle('paused', paused || document.hidden);
+  document.body.classList.toggle('animations-paused', paused || document.hidden);
   $('dance-toggle').textContent = paused ? '▶' : 'Ⅱ';
   $('dance-toggle').setAttribute('aria-pressed', String(paused));
-  $('dance-toggle').setAttribute('aria-label', paused ? "Play Starbot's dance" : "Pause Starbot's dance");
+  $('dance-toggle').setAttribute('aria-label', paused ? "Play animations" : "Pause animations");
   dancer?.setPlaying(opened && !paused && !document.hidden);
 }
 function celebrate() {
@@ -18,8 +19,10 @@ function celebrate() {
   $('confetti').replaceChildren();
   if (reduceMotion.matches) return;
   const colors = ['#edb2c8', '#b7cbaa', '#e8ca7d', '#d3bddf', '#f8dedf'];
-  for (let i = 0; i < 38; i++) {
+  for (let i = 0; i < 52; i++) {
     const bit = document.createElement('i');
+    if (i % 3 === 0) { bit.className = 'heart'; bit.textContent = '♥'; }
+    else if (i % 5 === 0) { bit.className = 'sparkle'; bit.textContent = '✦'; }
     bit.style.setProperty('--x', `${Math.random() * 100}%`);
     bit.style.setProperty('--c', colors[i % colors.length]);
     bit.style.setProperty('--delay', `${Math.random() * .6}s`);
@@ -30,7 +33,7 @@ function celebrate() {
   confettiTimer = setTimeout(() => $('confetti').replaceChildren(), 3600);
 }
 async function loadDancer() {
-  if (!loadingDancer) loadingDancer = import('./starbot.js?v=2').then(module => module.mountStarbot($('canvas-host'), $('robot-fallback')));
+  if (!loadingDancer) loadingDancer = import('./starbot.js?v=3').then(module => module.mountStarbot($('canvas-host'), $('robot-fallback')));
   try { dancer = await loadingDancer; updateDance(); }
   catch { /* The inline Starbot illustration keeps dancing if WebGL is unavailable. */ }
 }
@@ -40,6 +43,7 @@ $('open-card').addEventListener('click', () => {
   $('inside').hidden = false;
   $('open-card').setAttribute('aria-expanded', 'true');
   updateDance();
+  dancer?.replayDance();
   celebrate();
   $('letter-title').focus({ preventScroll: true });
   window.scrollTo({ top: 0, behavior: 'instant' });
@@ -56,6 +60,15 @@ $('close-card').addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'instant' });
 });
 $('dance-toggle').addEventListener('click', () => { paused = !paused; updateDance(); });
+$('encore').addEventListener('click', () => {
+  if (!reduceMotion.matches) paused = false;
+  dancer?.replayDance();
+  updateDance();
+  celebrate();
+  $('inside').classList.remove('encore');
+  void $('inside').offsetWidth;
+  $('inside').classList.add('encore');
+});
 document.addEventListener('visibilitychange', updateDance);
 reduceMotion.addEventListener('change', () => { paused = reduceMotion.matches; updateDance(); });
 updateDance();
