@@ -1,66 +1,8 @@
 import * as THREE from './vendor/three.module.min.js';
 import { GLTFLoader } from './vendor/loaders/GLTFLoader.js';
 
-// The Meshy export is a single static surface. Bind it once to a small dance rig
-// with continuous weights, rather than editing bands of vertices every frame.
-function rigRobot(source) {
-  const geometry = source.geometry.clone();
-  const root = new THREE.Bone(); root.name = 'dance_root';
-  const bones = [root];
-  const add = (name, x, y, z, parent = root) => {
-    const bone = new THREE.Bone(); bone.name = name;
-    bone.position.set(x, y, z); parent.add(bone); bones.push(bone);
-    return { bone, index: bones.length - 1 };
-  };
-  const head = add('dance_head', 0, .22, 0);
-  const limbs = [-1, 1].map(side => {
-    const shoulder = add(`shoulder_${side}`, side * .25, -.07, .04);
-    const elbow = add(`elbow_${side}`, side * .25, -.02, 0, shoulder.bone);
-    const hip = add(`hip_${side}`, side * .12, -.42, .04);
-    const knee = add(`knee_${side}`, 0, -.25, 0, hip.bone);
-    return { side, shoulder, elbow, hip, knee };
-  });
-  const positions = geometry.attributes.position;
-  const indices = new Uint16Array(positions.count * 4);
-  const weights = new Float32Array(positions.count * 4);
-  const smooth = THREE.MathUtils.smoothstep;
-  for (let i = 0; i < positions.count; i++) {
-    const x = positions.getX(i), y = positions.getY(i);
-    const limb = limbs[x < 0 ? 0 : 1];
-    const arm = smooth(Math.abs(x), .23, .39) * smooth(y, -.38, -.22) * (1 - smooth(y, .10, .27));
-    const forearm = smooth(Math.abs(x), .43, .58);
-    const leg = (1 - smooth(y, -.48, -.35)) * smooth(Math.abs(x), .025, .09);
-    const shin = 1 - smooth(y, -.73, -.59);
-    const neck = smooth(y, .17, .33);
-    const influences = [
-      [limb.shoulder.index, arm * (1 - forearm)],
-      [limb.elbow.index, arm * forearm],
-      [limb.hip.index, leg * (1 - shin)],
-      [limb.knee.index, leg * shin],
-      [head.index, neck],
-    ].filter(([, weight]) => weight > .00001);
-    const total = influences.reduce((sum, [, w]) => sum + w, 0);
-    influences.push([0, Math.max(0, 1 - total)]);
-    influences.sort((a, b) => b[1] - a[1]);
-    const top = influences.slice(0, 4);
-    const sum = top.reduce((value, [, w]) => value + w, 0) || 1;
-    top.forEach(([index, weight], n) => {
-      indices[i * 4 + n] = index; weights[i * 4 + n] = weight / sum;
-    });
-  }
-  geometry.setAttribute('skinIndex', new THREE.Uint16BufferAttribute(indices, 4));
-  geometry.setAttribute('skinWeight', new THREE.Float32BufferAttribute(weights, 4));
-  const mesh = new THREE.SkinnedMesh(geometry, source.material);
-  mesh.name = source.name;
-  mesh.position.copy(source.position); mesh.quaternion.copy(source.quaternion); mesh.scale.copy(source.scale);
-  mesh.add(root);
-  const parent = source.parent; parent.add(mesh); parent.remove(source);
-  parent.updateMatrixWorld(true);
-  mesh.bind(new THREE.Skeleton(bones));
-  mesh.frustumCulled = false;
-  return { mesh, head: head.bone, limbs };
-}
-
+// Starbot is a static remesh, not an authored animation rig. Keep its vertex
+// positions and normals intact; animate only the complete model's transform.
 export async function mountStarbot(host, fallback) {
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
   renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
@@ -82,7 +24,6 @@ export async function mountStarbot(host, fallback) {
   rim.position.set(1, 3, -3); scene.add(rim);
   const pivot = new THREE.Group(); scene.add(pivot);
   let playing = false, frame = 0, elapsed = 0, lastTime = 0, loaded = false, failed = false;
-  let rig;
   // A soft contact shadow without the hard disc edge of the previous floor mesh.
   const shadowCanvas = document.createElement('canvas'); shadowCanvas.width = shadowCanvas.height = 128;
   const context = shadowCanvas.getContext('2d');
@@ -108,25 +49,15 @@ export async function mountStarbot(host, fallback) {
   function pose(t) {
     const beat = t * 4.4;
     const cycle = t % 7.2;
-    const wave = THREE.MathUtils.smoothstep(cycle, 2.0, 2.7) * (1 - THREE.MathUtils.smoothstep(cycle, 4.7, 5.4));
+    const flourish = THREE.MathUtils.smoothstep(cycle, 2.0, 2.7) * (1 - THREE.MathUtils.smoothstep(cycle, 4.7, 5.4));
     const bow = THREE.MathUtils.smoothstep(cycle, 5.5, 5.95) * (1 - THREE.MathUtils.smoothstep(cycle, 6.3, 6.9));
-    const entrance = Math.min(t / .75, 1);
-    const pop = 1 + Math.pow(1 - entrance, 3) * (1.7 * entrance - .5);
-    pivot.scale.setScalar(pop);
-    pivot.position.set(Math.sin(beat / 2) * .10, .055 + (1 - Math.cos(beat * 2)) * .060, 0);
-    pivot.rotation.set(bow * .12, Math.sin(beat / 2) * .22, Math.sin(beat) * .085);
-    shadow.scale.setScalar(1 - pivot.position.y * .9);
-    if (!rig) return;
-    rig.head.rotation.set(bow * .13, Math.sin(beat / 2) * -.09, Math.sin(beat) * -.045);
-    for (const {side, shoulder, elbow, hip, knee} of rig.limbs) {
-      const phase = beat + (side < 0 ? Math.PI : 0);
-      const waving = side < 0 ? wave : 0;
-      shoulder.bone.rotation.z = THREE.MathUtils.lerp(side * (-.22 + Math.sin(phase) * .26), side * (.45 + Math.sin(beat * 1.4) * .16), waving);
-      shoulder.bone.rotation.y = Math.cos(phase) * .09;
-      elbow.bone.rotation.z = THREE.MathUtils.lerp(side * (-.10 + Math.cos(phase) * .13), side * (.24 + Math.cos(beat * 1.4) * .12), waving);
-      hip.bone.rotation.x = Math.sin(phase) * .11;
-      knee.bone.rotation.x = Math.max(0, Math.sin(phase)) * .17;
-    }
+    const entrance = Math.min(t / .55, 1);
+    const scale = .88 + .12 * (1 - Math.pow(1 - entrance, 3));
+    // Uniform scaling and rigid movement preserve the original body and arms.
+    pivot.scale.setScalar(scale);
+    pivot.position.set(Math.sin(beat / 2) * .12, .055 + (1 - Math.cos(beat * 2)) * .045, 0);
+    pivot.rotation.set(bow * .12, Math.sin(beat / 2) * .28 + flourish * Math.sin(beat * 1.2) * .12, Math.sin(beat) * .07);
+    shadow.scale.setScalar(1 - pivot.position.y * .8);
   }
   function tick(now) {
     frame = 0;
@@ -149,7 +80,6 @@ export async function mountStarbot(host, fallback) {
         if (material.map) material.map.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
         material.envMapIntensity = .6;
       }
-      rig = rigRobot(node);
     }
     const box = new THREE.Box3().setFromObject(model);
     const size = box.getSize(new THREE.Vector3());
