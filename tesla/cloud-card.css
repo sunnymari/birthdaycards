@@ -29,3 +29,7 @@ body{background:radial-gradient(circle at 22% 16%,#fff3f78a,transparent 35%),#fb
 
 .envelope-letter{height:auto;width:auto;justify-content:center;align-content:center}
 .signature p{display:block;width:fit-content}
+
+.letter .project-link{color:#bd608c;text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:4px;overflow-wrap:anywhere}
+.letter .project-link:hover{color:#934864;text-decoration-thickness:2px}
+.letter .project-link:focus-visible{outline:2px dashed #bd608c;outline-offset:4px;border-radius:3px}

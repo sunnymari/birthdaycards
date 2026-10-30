@@ -1,6 +1,6 @@
 # Thank you to the Tesla team
 
-A standalone thank-you card for Chris Haener and Mahika Dubey, from Marissa. Open the envelope to read the note and start Starbot's dance. Existing cards remain at their original paths.
+A standalone thank-you card for Chris Haener and Mahika Dubey, from Marissa Curry. Open the envelope to read the note and start Starbot's dance. Existing cards remain at their original paths.
 
 Published through the repository's existing GitHub Pages configuration at:
 https://sunnymari.github.io/birthdaycards/tesla/
@@ -16,3 +16,5 @@ The celebration includes bouncing pink handwritten thank-you letters, floating h
 The card uses Patrick Hand lettering, pink ink, cocoa outlines, scalloped cloud-paper edges, and a heart-patterned bow inspired by the supplied stationery reference. The original 3D Starbot and all dance controls are retained.
 
 Opening the card or tapping Encore launches a smiling gold shooting star with a pink-and-gold trail and twinkling sparkles. The effect cleans itself up, pauses with the other animations, and is hidden for reduced-motion preferences.
+
+The letter is signed Marissa Curry and links to the updated Starbot project, noting that Mahika’s interview question prompted her to extend her thinking and update the project.
