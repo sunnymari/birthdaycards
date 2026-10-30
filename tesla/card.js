@@ -30,7 +30,7 @@ function celebrate() {
   confettiTimer = setTimeout(() => $('confetti').replaceChildren(), 3600);
 }
 async function loadDancer() {
-  if (!loadingDancer) loadingDancer = import('./starbot.js').then(module => module.mountStarbot($('canvas-host'), $('robot-fallback')));
+  if (!loadingDancer) loadingDancer = import('./starbot.js?v=2').then(module => module.mountStarbot($('canvas-host'), $('robot-fallback')));
   try { dancer = await loadingDancer; updateDance(); }
   catch { /* The inline Starbot illustration keeps dancing if WebGL is unavailable. */ }
 }
