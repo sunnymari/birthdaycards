@@ -4,6 +4,7 @@ let opened = false;
 let paused = reduceMotion.matches;
 let dancer = null;
 let loadingDancer = null;
+let rendererModule = null;
 let confettiTimer;
 
 function updateDance() {
@@ -59,16 +60,51 @@ function celebrate() {
   }
   confettiTimer = setTimeout(() => $('confetti').replaceChildren(), 3600);
 }
-async function loadDancer() {
-  if (!loadingDancer) loadingDancer = import('./starbot.js?v=5').then(module => module.mountStarbot($('canvas-host'), $('robot-fallback')));
-  try { dancer = await loadingDancer; updateDance(); }
-  catch { /* The inline Starbot illustration keeps dancing if WebGL is unavailable. */ }
+function getRendererModule() {
+  if (!rendererModule) rendererModule = import('./starbot.js?v=8').catch(error => { rendererModule = null; throw error; });
+  return rendererModule;
 }
+function showRobotState(state) {
+  const ready = state === 'ready', error = state === 'error';
+  $('starbot-loading').hidden = ready;
+  $('starbot-scene-wrapper').classList.toggle('is-loading', !ready);
+  $('starbot-loading').classList.toggle('is-error', error);
+  $('retry-starbot').hidden = !error;
+  $('robot-stage').setAttribute('aria-busy', String(!ready && !error));
+  $('robot-stage').setAttribute('aria-label', ready
+    ? 'Pink 3D Starbot doing a happy thank-you dance'
+    : 'A little illustrated Starbot while the 3D robot arrives');
+  if (!ready) $('robot-fallback').hidden = false;
+  $('starbot-loading-title').textContent = error ? 'Starbot took a little detour…' : 'Starbot is coming…';
+  $('starbot-loading-note').textContent = error ? 'Tap below to invite Starbot back ♡' : 'Just a tiny moment ♡';
+}
+async function loadDancer() {
+  if (dancer) { dancer.resize(); updateDance(); return; }
+  if (loadingDancer) return loadingDancer;
+  showRobotState('loading');
+  loadingDancer = (async () => {
+    try {
+      const module = await getRendererModule();
+      dancer = await module.mountStarbot($('canvas-host'), $('robot-fallback'), {
+        onContextLost: () => { showRobotState('error'); }
+      });
+      showRobotState('ready'); updateDance();
+    } catch {
+      loadingDancer = null; showRobotState('error');
+    }
+  })();
+  return loadingDancer;
+}
+$('retry-starbot').addEventListener('click', () => {
+  dancer?.dispose(); dancer = null; loadingDancer = null;
+  loadDancer();
+});
 $('open-card').addEventListener('click', () => {
   opened = true;
   $('delivery').hidden = true;
   $('inside').hidden = false;
   $('open-card').setAttribute('aria-expanded', 'true');
+  dancer?.resize();
   updateDance();
   dancer?.replayDance();
   celebrate();
@@ -100,3 +136,8 @@ $('encore').addEventListener('click', () => {
 document.addEventListener('visibilitychange', updateDance);
 reduceMotion.addEventListener('change', () => { paused = reduceMotion.matches; updateDance(); });
 updateDance();
+
+// Download and decode the original model while the recipient reads the cover.
+getRendererModule().then(module => module.preloadStarbot()).catch(() => {
+  // Opening the card will retry; keep the illustrated welcome available.
+});

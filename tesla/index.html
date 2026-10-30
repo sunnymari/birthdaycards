@@ -17,6 +17,9 @@
 <link rel="stylesheet" href="card.css?v=3">
 <link rel="stylesheet" href="cloud-card.css?v=7">
 <link rel="stylesheet" href="shooting-star.css?v=6">
+<link rel="stylesheet" href="starbot-loading.css?v=8">
+<link rel="modulepreload" href="starbot.js?v=8">
+<link rel="preload" href="starbot.glb" as="fetch" type="model/gltf-binary" crossorigin fetchpriority="high">
 </head>
 <body>
 <svg class="svg-defs" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
@@ -51,12 +54,20 @@
       <div class="celebration">
         <p class="stage-kicker"><span aria-hidden="true">✦</span> STARBOT SAYS THANK YOU <span aria-hidden="true">✦</span></p>
         <div class="thank-you-bubbles" aria-hidden="true"><span style="--i:0;--arc:2px">T</span><span style="--i:1;--arc:-2px">h</span><span style="--i:2;--arc:0px">a</span><span style="--i:3;--arc:-3px">n</span><span style="--i:4;--arc:2px">k</span><span style="--i:5;--arc:0px">Y</span><span style="--i:6;--arc:2px">o</span><span style="--i:7;--arc:-2px">u</span><span style="--i:8;--arc:1px">♡</span></div>
-        <div class="robot-stage" id="robot-stage" role="img" aria-label="Pink Starbot doing a happy thank-you dance">
+        <div class="starbot-scene-wrapper is-loading" id="starbot-scene-wrapper">
+        <div class="robot-stage" id="robot-stage" role="img" aria-label="A little illustrated Starbot while the 3D robot arrives" aria-busy="true">
           <div class="stage-halo" aria-hidden="true"></div>
           <div class="floating-hearts" aria-hidden="true"><span style="--i:0;--x:20%;--drift:-45px;--tilt:-15deg">♥</span><span style="--i:1;--x:80%;--drift:32px;--tilt:12deg">♥</span><span style="--i:2;--x:30%;--drift:-30px;--tilt:18deg">✦</span><span style="--i:3;--x:73%;--drift:48px;--tilt:-16deg">♥</span><span style="--i:4;--x:16%;--drift:-15px;--tilt:-9deg">✧</span><span style="--i:5;--x:82%;--drift:10px;--tilt:15deg">✦</span><span style="--i:6;--x:27%;--drift:-45px;--tilt:-20deg">♥</span><span style="--i:7;--x:76%;--drift:35px;--tilt:20deg">♥</span></div>
           <div class="stage-grid" aria-hidden="true"></div><span class="dance-spark d1" aria-hidden="true">✧</span><span class="dance-spark d2" aria-hidden="true">✦</span><span class="dance-spark d3" aria-hidden="true">♡</span>
           <div class="robot-fallback" id="robot-fallback" aria-hidden="true"><svg><use href="#little-starbot"/></svg></div>
           <div class="canvas-host" id="canvas-host" aria-hidden="true"></div>
+        </div>
+        <div class="starbot-loading" id="starbot-loading" role="status" aria-live="polite" aria-atomic="true">
+          <div class="arrival-sparkles" aria-hidden="true"><span>✧</span><span>♡</span><span>✦</span></div>
+          <p id="starbot-loading-title">Starbot is coming…</p>
+          <small id="starbot-loading-note">Just a tiny moment ♡</small>
+          <button type="button" class="starbot-retry" id="retry-starbot" hidden>Try again ♡</button>
+        </div>
         </div>
         <div class="dance-caption"><span class="tiny-star" aria-hidden="true">✶</span><span>A little happy dance,<br><strong>just for you.</strong></span><button class="dance-toggle" id="dance-toggle" aria-pressed="false" aria-label="Pause animations">Ⅱ</button></div>
         <button type="button" class="encore-button" id="encore">Encore! <span aria-hidden="true">♡</span></button>
@@ -82,6 +93,6 @@
 </div>
 <div class="confetti" id="confetti" aria-hidden="true"></div>
 <div class="shooting-star-layer" id="shooting-stars" aria-hidden="true"></div>
-<script type="module" src="card.js?v=6"></script>
+<script type="module" src="card.js?v=8"></script>
 </body>
 </html>

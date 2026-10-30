@@ -1,9 +1,19 @@
 import * as THREE from './vendor/three.module.min.js';
 import { GLTFLoader } from './vendor/loaders/GLTFLoader.js';
 
+let assetPromise;
+export function preloadStarbot() {
+  if (!assetPromise) {
+    assetPromise = new GLTFLoader().loadAsync(new URL('./starbot.glb', import.meta.url).href)
+      .catch(error => { assetPromise = null; throw error; });
+  }
+  return assetPromise;
+}
+
 // Starbot is a static remesh, not an authored animation rig. Keep its vertex
 // positions and normals intact; animate only the complete model's transform.
-export async function mountStarbot(host, fallback) {
+export async function mountStarbot(host, fallback, { onContextLost } = {}) {
+  const gltf = await preloadStarbot();
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
   renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -72,8 +82,7 @@ export async function mountStarbot(host, fallback) {
     else if (loaded && !frame) frame = requestAnimationFrame(tick);
   }
   try {
-    const gltf = await new GLTFLoader().loadAsync(new URL('./starbot.glb', import.meta.url).href);
-    const model = gltf.scene;
+    const model = gltf.scene.clone(true);
     const meshes = []; model.traverse(node => { if (node.isMesh) meshes.push(node); });
     for (const node of meshes) {
       for (const material of Array.isArray(node.material) ? node.material : [node.material]) {
@@ -94,10 +103,14 @@ export async function mountStarbot(host, fallback) {
   }
   renderer.domElement.addEventListener('webglcontextlost', () => {
     failed = true; setPlaying(false); fallback.hidden = false; renderer.domElement.hidden = true;
+    onContextLost?.();
   });
   function replayDance() {
     elapsed = 0; lastTime = 0;
-    if (loaded) { pose(playing ? 0 : .75); renderer.render(scene, camera); }
+    if (loaded && !failed) { pose(playing ? 0 : .75); renderer.render(scene, camera); }
   }
-  return { setPlaying, replayDance };
+  function dispose() {
+    setPlaying(false); observer.disconnect(); renderer.dispose(); renderer.domElement.remove();
+  }
+  return { setPlaying, replayDance, resize, dispose };
 }
