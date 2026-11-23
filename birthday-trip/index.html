@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#fbfcfa">
+  <title>A little thank-you · From Marissa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tesla/card.css?v=3">
+  <link rel="stylesheet" href="../tesla/cloud-card.css?v=7">
+  <link rel="stylesheet" href="../tesla/shooting-star.css?v=6">
+  <link rel="stylesheet" href="../tesla/starbot-loading.css?v=8">
+  <link rel="stylesheet" href="birthday-card.css">
+  <link rel="modulepreload" href="../tesla/starbot.js?v=8">
+  <link rel="preload" href="../tesla/starbot.glb" as="fetch" type="model/gltf-binary" crossorigin>
+  <noscript><style>#open-card { display: none; }</style></noscript>
+</head>
+<body class="birthday-card">
+  <svg class="svg-defs" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="little-starbot" viewBox="0 0 240 260">
+      <path d="M120 42V20" stroke="#d882a2" stroke-width="8" stroke-linecap="round"/>
+      <path d="m120 3 5 10 11 2-8 8 2 11-10-5-10 5 2-11-8-8 11-2z" fill="#f4c86b"/>
+      <g fill="#f5afca" stroke="#826248" stroke-width="3">
+        <rect x="41" y="69" width="24" height="43" rx="11"/>
+        <rect x="175" y="69" width="24" height="43" rx="11"/>
+        <rect x="67" y="132" width="106" height="68" rx="27"/>
+        <path d="m73 147-30 11-16-29-14 8 14 49 21 2 35-19z"/>
+        <path d="m167 147 30 11 16-29 14 8-14 49-21 2-35-19z"/>
+        <path d="m85 192-9 45 29 5 14-45zM125 197l13 45 29-5-12-45z"/>
+        <rect x="68" y="228" width="42" height="22" rx="10"/>
+        <rect x="134" y="228" width="42" height="22" rx="10"/>
+        <rect x="56" y="43" width="128" height="96" rx="36" fill="#fffaf5"/>
+      </g>
+      <rect x="73" y="66" width="94" height="47" rx="19" fill="#68556b"/>
+      <path d="M87 90q8-12 16 0m34 0q8-12 16 0" stroke="#fff0f8" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <ellipse cx="83" cy="108" rx="9" ry="5" fill="#efa1bd"/>
+      <ellipse cx="157" cy="108" rx="9" ry="5" fill="#efa1bd"/>
+      <path d="m120 151 6 12 13 2-10 9 3 13-12-6-12 6 3-13-10-9 13-2z" fill="#fff0b8"/>
+    </symbol>
+  </svg>
+
+  <div class="flower-field" aria-hidden="true">
+    <span class="star s1">✧</span>
+    <span class="star s2">✦</span>
+    <span class="star s3">✧</span>
+  </div>
+
+  <div class="site-shell">
+    <header class="masthead">
+      <span class="from"><span aria-hidden="true">✳</span> a little note from Marissa</span>
+    </header>
+    <main>
+      <section class="delivery" id="delivery" aria-labelledby="cover-title">
+        <h1 id="cover-title">Thank you Daddy</h1>
+        <p class="recipients">For our little birthday getaway <span aria-hidden="true">♡</span></p>
+        <button class="envelope" id="open-card" type="button" aria-controls="inside" aria-expanded="false">
+          <span class="envelope-letter">
+            <svg aria-hidden="true"><use href="#little-starbot"/></svg>
+            <span>Open your card</span>
+          </span>
+        </button>
+      </section>
+
+      <section class="inside" id="inside" hidden aria-labelledby="letter-title">
+        <div class="card-topline">
+          <button class="text-button" id="close-card" type="button">Fold card</button>
+        </div>
+        <div class="open-card">
+          <article class="letter">
+            <h2 id="letter-title" tabindex="-1">Thank you Daddy <span class="heading-heart" aria-hidden="true">♡</span></h2>
+            <p class="birthday-message">Thank you for being nice to me and for taking me on a trip. I can’t wait to get away with you for my birthday!</p>
+            <div class="signature">
+              <span>Love,</span>
+              <p>Marissa <span aria-hidden="true">✧</span></p>
+            </div>
+          </article>
+          <div class="celebration">
+            <div class="starbot-scene-wrapper is-loading" id="starbot-scene-wrapper">
+              <div class="robot-stage" id="robot-stage" role="img" aria-label="A little illustrated Starbot while the 3D robot arrives" aria-busy="true">
+                <div class="stage-halo" aria-hidden="true"></div>
+                <div class="stage-grid" aria-hidden="true"></div>
+                <span class="dance-spark d1" aria-hidden="true">✧</span>
+                <span class="dance-spark d2" aria-hidden="true">✦</span>
+                <span class="dance-spark d3" aria-hidden="true">♡</span>
+                <div class="robot-fallback" id="robot-fallback" aria-hidden="true">
+                  <svg><use href="#little-starbot"/></svg>
+                </div>
+                <div class="canvas-host" id="canvas-host" aria-hidden="true"></div>
+              </div>
+              <div class="starbot-loading" id="starbot-loading" role="status" aria-live="polite" aria-atomic="true">
+                <div class="arrival-sparkles" aria-hidden="true"><span>✧</span><span>♡</span><span>✦</span></div>
+                <p id="starbot-loading-title">Starbot is coming…</p>
+                <small id="starbot-loading-note">Just a tiny moment ♡</small>
+                <button class="starbot-retry" id="retry-starbot" type="button" hidden>Try again</button>
+              </div>
+            </div>
+            <div class="dance-caption">
+              <span class="tiny-star" aria-hidden="true">✶</span>
+              <span>Starbot’s happy dance</span>
+              <button class="dance-toggle" id="dance-toggle" type="button" aria-pressed="false" aria-label="Pause animations">Ⅱ</button>
+            </div>
+            <button class="encore-button" id="encore" type="button">Encore <span aria-hidden="true">♡</span></button>
+          </div>
+        </div>
+      </section>
+
+      <noscript>
+        <article class="no-script">
+          <p>Thank you for being nice to me and for taking me on a trip. I can’t wait to get away with you for my birthday!</p>
+          <p>Love, Marissa</p>
+        </article>
+      </noscript>
+    </main>
+  </div>
+
+  <div class="confetti" id="confetti" aria-hidden="true"></div>
+  <div class="shooting-star-layer" id="shooting-stars" aria-hidden="true"></div>
+  <script type="module" src="../tesla/card.js?v=8"></script>
+</body>
+</html>
